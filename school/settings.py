@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     'custom',
     'account',
+    'schoolDetails',
 ]
 
 MIDDLEWARE = [
