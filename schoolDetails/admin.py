@@ -9,6 +9,7 @@ class SchoolAdmin(admin.ModelAdmin):
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
+    search_fields = ['']
     list_display = ['school_name', 'department_name']
     autocomplete_fields = ['school']
 
@@ -19,7 +20,7 @@ class UnitAdmin(admin.ModelAdmin):
 @admin.register(UnitDetails)
 class UnitDetailsAdmin(admin.ModelAdmin):
     list_display = ['unit_code', 'reg_no', 'registration_status']
-    autocomplete_fields = ['unit']
+    autocomplete_fields = ['unit', 'student']
 
 @admin.register(Hostel)
 class HostelAdmin(admin.ModelAdmin):
@@ -28,7 +29,7 @@ class HostelAdmin(admin.ModelAdmin):
 
 @admin.register(StudentHostel)
 class StudentHostelAdmin(admin.ModelAdmin):
-    list_display = ['first_name', 'last_name', 'payment_status']
+    list_display = ['reg_no', 'first_name', 'last_name', 'payment_status']
     autocomplete_fields = ['student', 'hostel']
 
 @admin.register(Exam)
@@ -37,7 +38,8 @@ class ExamAdmin(admin.ModelAdmin):
 
 @admin.register(Result)
 class ResultAdmin(admin.ModelAdmin):
-    list_display = ['exam_type', 'reg_no', 'unit_code', 'cat', 'exam', 'total']
+    list_display = ['reg_no', 'unit_code', 'cat', 'exam', 'total']
+    autocomplete_fields = ['student', 'unit']
 
     @admin.display(ordering='total')
     def total(self, result:Result):
@@ -45,4 +47,5 @@ class ResultAdmin(admin.ModelAdmin):
 
 @admin.register(Attendance)
 class AttendanceAdmin(admin.ModelAdmin):
-    pass
+    autocomplete_fields = ['student', 'unit']
+    list_display = ['date', 'reg_no', 'unit_code']

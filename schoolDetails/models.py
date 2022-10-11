@@ -9,14 +9,14 @@ class School(models.Model):
     school_name = models.CharField(max_length=255)
 
     def __str__(self) -> str:
-        return self.name
+        return self.school_name
 
 class Department(models.Model):
     school = models.ForeignKey(School, on_delete=models.CASCADE, related_name='school')
     department_name = models.CharField(max_length=255)
 
     def __str__(self) -> str:
-        return self.name
+        return self.department_name
 
     @admin.display(ordering='school__school_name')
     def school_name(self):
@@ -78,15 +78,19 @@ class StudentHostel(models.Model):
     payment_status = models.CharField(max_length=200, choices=PAYMENT_STATUS_CHOICES)
 
     def __str__(self) -> str:
-        return f'{self.student.first_name} {self.student.last_name}'
+        return self.student.reg_no
+
+    @admin.display(ordering='student__reg_no')
+    def reg_no(self):
+        return self.student.reg_no
 
     @admin.display(ordering='student__first_name')
     def first_name(self):
-        return self.student.first_name
+        return self.student.user.first_name
 
     @admin.display(ordering='student__last_name')
     def last_name(self):
-        return self.student.last_name
+        return self.student.user.last_name
 
 
 class Exam(models.Model):
@@ -112,9 +116,6 @@ class Result(models.Model):
     def __str__(self) -> str:
         return self.exam.exam_type
 
-    @admin.display(ordering='exam__exam_type')
-    def exam_type(self):
-        return self.exam.exam_type
 
     admin.display(ordering='student__reg_no')
     def reg_no(self):
@@ -130,6 +131,15 @@ class Attendance(models.Model):
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
 
     def __str__(self) -> str:
-        return self.date
+        return self.student.reg_no
+
+    admin.display(ordering='student__reg_no')
+    def reg_no(self):
+        return self.student.reg_no
+
+    @admin.display(ordering='unit__unit_code')
+    def unit_code(self):
+        return self.unit.unit_code
+
 
     
