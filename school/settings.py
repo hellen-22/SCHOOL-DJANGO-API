@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'rest_framework',
+    'djoser',
 
     'custom',
     'account',
@@ -146,3 +148,10 @@ AUTH_USER_MODEL = 'custom.User'
 INTERNAL_IPS =[
     '127.0.0.1'
 ]
+
+DJOSER = {
+    'SERIALIZERS': {
+        'current_user': 'account.serializers.UserSerializer' ,
+        'user_create': 'account.serializers.UserCreateSerializer'
+    }
+}

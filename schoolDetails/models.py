@@ -113,9 +113,6 @@ class Result(models.Model):
     cat = models.PositiveSmallIntegerField(validators=[MinValueValidator(0), MaxValueValidator(30)])
     exam = models.PositiveSmallIntegerField(validators=[MinValueValidator(0), MaxValueValidator(70)])
 
-    def __str__(self) -> str:
-        return self.exam.exam_type
-
 
     admin.display(ordering='student__reg_no')
     def reg_no(self):
