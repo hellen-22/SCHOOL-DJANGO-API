@@ -5,6 +5,7 @@ from account.models import *
 
 @admin.register(Student)
 class StudentAdmin(admin.ModelAdmin):
+    search_fields = ['']
     list_display = ['reg_no', 'first_name', 'last_name']
     ordering = ['user__first_name', 'user__last_name']
     autocomplete_fields = ['user']

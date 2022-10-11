@@ -1,7 +1,6 @@
-from random import choices
 from django.db import models
+from django.contrib import admin
 from django.core.validators import MinValueValidator, MaxValueValidator
-import validators
 
 from account.models import *
 
@@ -19,6 +18,10 @@ class Department(models.Model):
     def __str__(self) -> str:
         return self.name
 
+    @admin.display(ordering='school__school_name')
+    def school_name(self):
+        return self.school.school_name
+
 class Unit(models.Model):
     unit_name = models.CharField(max_length=255)
     unit_code = models.CharField(max_length=255)
@@ -27,16 +30,26 @@ class Unit(models.Model):
         return self.unit_name
 
 class UnitDetails(models.Model):
-    REGISTRATION_CHOICES = (
+    REGISTRATION_CHOICES = [
         ('Y', 'Yes'),
         ('N', 'No')
-    )
+    ]
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, related_name='units')
-    student_id = models.ForeignKey('account.Student', on_delete=models.CASCADE, related_name='units')
+    student = models.ForeignKey('account.Student', on_delete=models.CASCADE, related_name='units', null=True)
     registration_status = models.CharField(max_length=255, choices=REGISTRATION_CHOICES)
 
     def __str__(self) -> str:
         return self.unit.unit_name 
+
+
+    @admin.display(ordering='unit__unit_code')
+    def unit_code(self):
+        return self.unit.unit_code
+
+
+    @admin.display(ordering='student__reg_no')
+    def reg_no(self):
+        return self.student.reg_no
 
     
 class Hostel(models.Model):
@@ -67,14 +80,22 @@ class StudentHostel(models.Model):
     def __str__(self) -> str:
         return f'{self.student.first_name} {self.student.last_name}'
 
+    @admin.display(ordering='student__first_name')
+    def first_name(self):
+        return self.student.first_name
+
+    @admin.display(ordering='student__last_name')
+    def last_name(self):
+        return self.student.last_name
+
 
 class Exam(models.Model):
-    EXAM_TYPE_CHOICES = (
+    EXAM_TYPE_CHOICES = [
         ('SUP', 'SUPPLEMENTARY EXAM'),
         ('SPE', 'SPECIAL EXAM'),
-        ('RE', 'RETAKE EXAM')
+        ('RE', 'RETAKE EXAM'),
         ('MAIN', 'MAIN EXAM')
-    )
+    ]
     exam_type = models.CharField(max_length=200, choices=EXAM_TYPE_CHOICES)
     date = models.DateTimeField()
 
@@ -90,6 +111,18 @@ class Result(models.Model):
 
     def __str__(self) -> str:
         return self.exam.exam_type
+
+    @admin.display(ordering='exam__exam_type')
+    def exam_type(self):
+        return self.exam.exam_type
+
+    admin.display(ordering='student__reg_no')
+    def reg_no(self):
+        return self.student.reg_no
+
+    @admin.display(ordering='unit__unit_code')
+    def unit_code(self):
+        return self.unit.unit_code
 
 class Attendance(models.Model):
     date = models.DateTimeField(auto_now=True)
