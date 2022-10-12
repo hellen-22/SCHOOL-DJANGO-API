@@ -1,5 +1,3 @@
-from venv import create
-from django.shortcuts import render
 from django.db.models.aggregates import Count
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser

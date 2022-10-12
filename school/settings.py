@@ -151,7 +151,7 @@ INTERNAL_IPS =[
 
 DJOSER = {
     'SERIALIZERS': {
-        'current_user': 'account.serializers.UserSerializer' ,
-        'user_create': 'account.serializers.UserCreateSerializer'
+        'current_user': 'custom.serializers.UserSerializer' ,
+        'user_create': 'custom.serializers.UserCreateSerializer'
     }
 }
