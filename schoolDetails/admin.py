@@ -1,4 +1,7 @@
 from django.contrib import admin
+from django.utils.html import format_html, urlencode
+from django.urls import reverse
+from django.db.models.aggregates import Count
 
 from schoolDetails.models import *
 
@@ -6,6 +9,20 @@ from schoolDetails.models import *
 @admin.register(School)
 class SchoolAdmin(admin.ModelAdmin):
     search_fields = ['']
+    list_display = ['school_name', 'number_of_departments']
+
+    @admin.display(ordering='total_departments')
+    def number_of_departments(self, school:School):
+        url = (
+            reverse('admin:schoolDetails_department_changelist')
+            + '?'
+            + urlencode({
+                'school__id': str(school.id)
+            }))
+        return format_html('<a href="{}">{} </a>', url, school.total_departments)
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).annotate(total_departments=Count('school'))
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
