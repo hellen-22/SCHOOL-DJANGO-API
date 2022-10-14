@@ -1,4 +1,5 @@
 from pyexpat import model
+from attr import fields
 from rest_framework import serializers
 from .models import *
 
@@ -18,14 +19,6 @@ class SchoolSerializer(serializers.ModelSerializer):
 
 
 class CreateDepartmentSerializer(serializers.ModelSerializer):
-
-    """
-    #Unsolved Adding a department to a School that does not exists
-    def validate_school_id(self, *kwargs, value):
-        if not School.objects.filter(pk=self.kwargs['school_pk']):
-            raise serializers.ValidationError('The school does not exists. Create school first')
-        return value
-    """
     def create(self, validated_data):
         school_id = self.context['school_id']
         department_name = self.validated_data['department_name']
@@ -40,8 +33,13 @@ class CreateDepartmentSerializer(serializers.ModelSerializer):
         fields = ['id', 'department_name']
 
 
-
 class UnitSerializer(serializers.ModelSerializer):
     class Meta:
         model = Unit
         fields = ['id', 'unit_name', 'unit_code']
+
+
+class HostelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Hostel
+        fields = ['id', 'hostel_name', 'capacity']

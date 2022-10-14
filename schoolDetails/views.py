@@ -32,3 +32,7 @@ class DepartmentViewSet(ModelViewSet):
 class UnitViewSet(ModelViewSet):
     queryset = Unit.objects.all()
     serializer_class = UnitSerializer
+
+class HostelViewSet(ModelViewSet):
+    queryset = Hostel.objects.all()
+    serializer_class = HostelSerializer

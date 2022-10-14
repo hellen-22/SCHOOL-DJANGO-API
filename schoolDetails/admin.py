@@ -36,7 +36,7 @@ class UnitAdmin(admin.ModelAdmin):
 
 @admin.register(UnitDetails)
 class UnitDetailsAdmin(admin.ModelAdmin):
-    list_display = ['unit_code', 'reg_no', 'registration_status']
+    list_display = ['unit_code', 'registration_status']
     autocomplete_fields = ['unit', 'student']
 
 @admin.register(Hostel)

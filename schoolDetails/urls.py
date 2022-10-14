@@ -8,5 +8,6 @@ school_departments_router = routers.NestedDefaultRouter(router, 'school' ,lookup
 school_departments_router.register('department', views.DepartmentViewSet, basename='department')
 
 router.register('unit', views.UnitViewSet)
+router.register('hostel', views.HostelViewSet, basename='hostel')
 
 urlpatterns = router.urls + school_departments_router.urls

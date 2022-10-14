@@ -1,3 +1,5 @@
+from email.policy import default
+from enum import unique
 from django.db import models
 from django.contrib import admin
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -31,12 +33,12 @@ class Unit(models.Model):
 
 class UnitDetails(models.Model):
     REGISTRATION_CHOICES = [
-        ('Y', 'Yes'),
-        ('N', 'No')
+        ('Yes', 'Yes'),
+        ('No', 'No')
     ]
     unit = models.ForeignKey(Unit, on_delete=models.CASCADE, related_name='units')
     student = models.ForeignKey('account.Student', on_delete=models.CASCADE, related_name='units', null=True)
-    registration_status = models.CharField(max_length=255, choices=REGISTRATION_CHOICES)
+    registration_status = models.CharField(max_length=255, choices=REGISTRATION_CHOICES, null=True, default='No')
 
     def __str__(self) -> str:
         return self.unit.unit_name 
@@ -46,7 +48,7 @@ class UnitDetails(models.Model):
     def unit_code(self):
         return self.unit.unit_code
 
-
+    
     @admin.display(ordering='student__reg_no')
     def reg_no(self):
         return self.student.reg_no

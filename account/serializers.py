@@ -1,7 +1,9 @@
 from django.db import transaction
+from django.db.models import Q
 from rest_framework import serializers
 
 from .models import *
+from schoolDetails.models import UnitDetails, Unit
 from schoolDetails.serializers import UnitSerializer
 from custom.models import User
 from custom.serializers import UserCreateSerializer
@@ -33,7 +35,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ['id', 'reg_no', 'department', 'user']
+        fields = ['id', 'reg_no', 'department', 'user', 'units']
 
 
 
@@ -60,5 +62,36 @@ class LecturerSerializer(serializers.ModelSerializer):
         model = Lecturer
         fields = ['id', 'staff_id', 'department', 'user']
 
-    
 
+
+class UnitDetailSerializer(serializers.ModelSerializer):
+    unit = UnitSerializer()
+    class Meta:
+        model = UnitDetails
+        fields = ['unit', 'registration_status']
+
+
+class CreateUnitDetailSerializer(serializers.ModelSerializer):
+        
+    def save(self, **kwargs):
+        unit = self.validated_data['unit']
+        student_id = self.context['student_id']
+
+        """
+        Bug- the student is saving a unit twice
+        if UnitDetails.objects.filter(Q(unit_id__gt=0) & Q(student_id__gt=0)):
+            raise serializers.ValidationError("The Student already has the Unit")
+        else:
+            return UnitDetails.objects.create(unit=unit, student_id=student_id)
+
+        """
+        return UnitDetails.objects.create(unit=unit, student_id=student_id)
+
+    class Meta:
+        model = UnitDetails
+        fields = ['unit']
+
+class UpdateUnitSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UnitDetails()
+        fields = ['registration_status']
