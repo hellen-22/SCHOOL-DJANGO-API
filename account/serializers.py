@@ -16,7 +16,7 @@ class StudentSerializer(serializers.ModelSerializer):
     user = UserCreateSerializer()
 
     def save(self, **kwargs):
-        with transaction.atomic:
+        with transaction.atomic():
             user = dict(self.validated_data['user'])
             username = user['username']
             email = user['email']
@@ -40,12 +40,8 @@ class StudentSerializer(serializers.ModelSerializer):
 class LecturerSerializer(serializers.ModelSerializer):
     user = UserCreateSerializer()
 
-    def validate_user(self, value):
-        if User.objects.filter(pk=value).exists():
-            raise serializers.ValidationError('User already exists')
-
     def save(self, **kwargs):
-        with transaction.atomic:
+        with transaction.atomic():
             user = dict(self.validated_data['user'])
             username = user['username']
             email = user['email']
