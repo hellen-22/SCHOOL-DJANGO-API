@@ -75,9 +75,9 @@ class StudentHostel(models.Model):
         (PAYMENT_STATUS_FAILED, 'Failed')
     ]
 
-    student = models.ForeignKey('account.Student', on_delete=models.CASCADE, related_name='student_hostel')
+    student = models.OneToOneField('account.Student', on_delete=models.CASCADE, related_name='student', unique=True)
     hostel = models.ForeignKey(Hostel, on_delete=models.CASCADE, related_name='hostel')
-    payment_status = models.CharField(max_length=200, choices=PAYMENT_STATUS_CHOICES)
+    payment_status = models.CharField(max_length=200, choices=PAYMENT_STATUS_CHOICES, default='Pending')
 
     def __str__(self) -> str:
         return self.student.reg_no

@@ -1,7 +1,7 @@
-from pyexpat import model
-from attr import fields
 from rest_framework import serializers
+
 from .models import *
+from account.models import Student
 
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -42,4 +42,6 @@ class UnitSerializer(serializers.ModelSerializer):
 class HostelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hostel
-        fields = ['id', 'hostel_name', 'capacity']
+        fields = ['id', 'hostel_name', 'capacity', 'student']
+    
+

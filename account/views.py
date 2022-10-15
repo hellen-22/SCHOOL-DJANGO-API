@@ -32,3 +32,19 @@ class UnitDetailsViewSet(ModelViewSet):
 
     def get_serializer_context(self):
         return {'student_id': self.kwargs['student_pk']}
+
+class StudentHostelViewSet(ModelViewSet):
+    http_method_names = ['get', 'post', 'patch', 'delete']
+    
+    def get_queryset(self):
+        return StudentHostel.objects.filter(student_id=self.kwargs['student_pk'])
+
+    def get_serializer_class(self):
+        if self.request.method == 'POST':
+            return CreateStudentHostelSerializer
+        elif self.request.method == 'PATCH':
+            return UpdateStudentHostelSerializer
+        return StudentHostelDetailsSerializer
+
+    def get_serializer_context(self):
+        return {'student_id': self.kwargs['student_pk']}

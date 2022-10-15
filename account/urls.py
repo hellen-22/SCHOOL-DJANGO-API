@@ -5,8 +5,10 @@ router = routers.DefaultRouter()
 router.register('student', views.StudentViewSet)
 router.register('lecturer', views.LecturerViewSet)
 
-student_unit_router = routers.NestedDefaultRouter(router, 'student', lookup='student')
-student_unit_router.register('units', views.UnitDetailsViewSet, basename='units')
+student_router = routers.NestedDefaultRouter(router, 'student', lookup='student')
+student_router.register('units', views.UnitDetailsViewSet, basename='units')
+student_router.register('hostel', views.StudentHostelViewSet, basename='hostel')
 
 
-urlpatterns = router.urls + student_unit_router.urls
+
+urlpatterns = router.urls + student_router.urls

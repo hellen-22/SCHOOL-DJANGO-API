@@ -1,9 +1,11 @@
+from pyexpat import model
+from attr import field
 from django.db import transaction
 from django.db.models import Q
 from rest_framework import serializers
 
 from .models import *
-from schoolDetails.models import UnitDetails, Unit
+from schoolDetails.models import Hostel, StudentHostel, UnitDetails, Unit
 from schoolDetails.serializers import UnitSerializer
 from custom.models import User
 from custom.serializers import UserCreateSerializer
@@ -95,3 +97,31 @@ class UpdateUnitSerializer(serializers.ModelSerializer):
     class Meta:
         model = UnitDetails()
         fields = ['registration_status']
+
+
+class HostelDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Hostel
+        fields = ['hostel_name']
+
+class StudentHostelDetailsSerializer(serializers.ModelSerializer):
+    hostel = HostelDetailsSerializer()
+    class Meta:
+        model = StudentHostel
+        fields = ['id', 'hostel', 'payment_status']
+
+class CreateStudentHostelSerializer(serializers.ModelSerializer):
+    payment_status = serializers.CharField(max_length=200, read_only=True)
+    def save(self, **kwargs):
+        hostel = self.validated_data['hostel']
+        student_id = self.context['student_id']
+
+        return StudentHostel.objects.create(hostel=hostel, student_id=student_id)
+    class Meta:
+        model = StudentHostel
+        fields = ['id', 'hostel', 'payment_status']
+
+class UpdateStudentHostelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = StudentHostel
+        fields = ['payment_status']
