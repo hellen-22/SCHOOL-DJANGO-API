@@ -40,14 +40,16 @@ class HostelViewSet(ModelViewSet):
 
 
 class UnitResultViewSet(ModelViewSet):
-    http_method_names = ['get', 'post', 'patch', 'delete']
+    serializer_class = UnitResultSerializer
     permission_classes = [IsAdminOrReadOnly]
     
+    """
     def get_serializer_class(self):
         if self.request.method == 'GET':
             return ViewUnitResultSerializer
         return UnitResultSerializer
 
+    """
 
     def get_queryset(self):
         return Result.objects.select_related('unit', 'student').filter(unit_id=self.kwargs['unit_pk'])
