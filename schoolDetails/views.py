@@ -1,3 +1,4 @@
+from ast import Mod
 from django.db.models.aggregates import Count
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser
@@ -36,3 +37,22 @@ class UnitViewSet(ModelViewSet):
 class HostelViewSet(ModelViewSet):
     queryset = Hostel.objects.all()
     serializer_class = HostelSerializer
+
+
+class UnitResultViewSet(ModelViewSet):
+    http_method_names = ['get', 'post', 'patch', 'delete']
+    permission_classes = [IsAdminOrReadOnly]
+    
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return ViewUnitResultSerializer
+        return UnitResultSerializer
+
+
+    def get_queryset(self):
+        return Result.objects.select_related('unit', 'student').filter(unit_id=self.kwargs['unit_pk'])
+
+    def get_serializer_context(self):
+        return {'unit_id': self.kwargs['unit_pk']}
+
+

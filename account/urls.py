@@ -8,6 +8,7 @@ router.register('lecturer', views.LecturerViewSet)
 student_router = routers.NestedDefaultRouter(router, 'student', lookup='student')
 student_router.register('units', views.UnitDetailsViewSet, basename='units')
 student_router.register('hostel', views.StudentHostelViewSet, basename='hostel')
+student_router.register('result', views.StudentResultViewSet, basename='result')
 
 
 

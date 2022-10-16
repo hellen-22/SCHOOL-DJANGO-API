@@ -109,9 +109,8 @@ class Exam(models.Model):
         return self.exam_type
 
 class Result(models.Model):
-    exam = models.ForeignKey(Exam, on_delete=models.CASCADE)
-    student = models.ForeignKey('account.Student', on_delete=models.CASCADE)
-    unit = models.ForeignKey(Unit, on_delete=models.CASCADE)
+    student = models.ForeignKey('account.Student', on_delete=models.CASCADE, related_name='student_result')
+    unit = models.ForeignKey(Unit, on_delete=models.CASCADE, related_name='unit')
     cat = models.PositiveSmallIntegerField(validators=[MinValueValidator(0), MaxValueValidator(30)])
     exam = models.PositiveSmallIntegerField(validators=[MinValueValidator(0), MaxValueValidator(70)])
 

@@ -5,7 +5,7 @@ from django.db.models import Q
 from rest_framework import serializers
 
 from .models import *
-from schoolDetails.models import Hostel, StudentHostel, UnitDetails, Unit
+from schoolDetails.models import *
 from schoolDetails.serializers import UnitSerializer
 from custom.models import User
 from custom.serializers import UserCreateSerializer
@@ -125,3 +125,13 @@ class UpdateStudentHostelSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentHostel
         fields = ['payment_status']
+
+
+class StudentResultsSerializer(serializers.ModelSerializer):
+    unit = UnitSerializer()
+    total = serializers.IntegerField(read_only=True)
+
+    class Meta:
+        model = Result
+        fields = ['id', 'unit', 'cat', 'exam', 'total']
+

@@ -1,9 +1,12 @@
 from django.shortcuts import render
-from rest_framework.viewsets import ModelViewSet
+from django.db.models import F
+from rest_framework.mixins import  RetrieveModelMixin, ListModelMixin, DestroyModelMixin, UpdateModelMixin
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.permissions import IsAdminUser
 
 from .serializers import *
 from .models import *
+from schoolDetails.permissions import IsAdminOrReadOnly
 
 # Create your views here.
 class StudentViewSet(ModelViewSet):
@@ -48,3 +51,10 @@ class StudentHostelViewSet(ModelViewSet):
 
     def get_serializer_context(self):
         return {'student_id': self.kwargs['student_pk']}
+
+class StudentResultViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, DestroyModelMixin, GenericViewSet):
+    serializer_class = StudentResultsSerializer
+    permission_classes = [IsAdminOrReadOnly]
+
+    def get_queryset(self):
+        return Result.objects.select_related('unit').annotate(total=F('cat') + F('exam')).filter(student_id=self.kwargs['student_pk'])

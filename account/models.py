@@ -5,7 +5,7 @@ from django.db import models
 from schoolDetails.models import Department
 
 class Student(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, unique=True)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, unique=True, related_name='student_user')
     reg_no = models.CharField(max_length=200, unique=True)
     department = models.ForeignKey(Department, on_delete=models.CASCADE, null=True)
 

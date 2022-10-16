@@ -3,6 +3,11 @@ from rest_framework import serializers
 from .models import *
 from account.models import Student
 
+class StudentDetailsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Student
+        fields = ['reg_no', 'first_name', 'last_name']
+
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Department
@@ -45,3 +50,28 @@ class HostelSerializer(serializers.ModelSerializer):
         fields = ['id', 'hostel_name', 'capacity', 'student']
     
 
+class ExamSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Exam
+        fields = ['id', 'exam_type', 'date' ]
+
+
+class ViewUnitResultSerializer(serializers.ModelSerializer):
+    unit = UnitSerializer()
+    student = StudentDetailsSerializer()
+
+    class Meta:
+        model = Result
+        fields = ['id', 'unit', 'student']
+
+
+
+class UnitResultSerializer(serializers.ModelSerializer):
+    def create(self, validated_data):
+        unit_id = self.context['unit_id']
+
+        return Result.objects.create(unit_id=unit_id, **validated_data)
+
+    class Meta:
+        model = Result
+        fields = ['id', 'student','unit', 'cat', 'exam']
