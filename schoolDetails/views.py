@@ -21,6 +21,8 @@ class DepartmentViewSet(ModelViewSet):
     def get_serializer_class(self):
         if self.request.method == 'POST':
             return CreateDepartmentSerializer
+        elif self.request.method == 'PATCH':
+            return UpdateDepartmentSerializer
         return DepartmentSerializer
 
     def get_serializer_context(self):
@@ -33,6 +35,8 @@ class DepartmentViewSet(ModelViewSet):
 class UnitViewSet(ModelViewSet):
     queryset = Unit.objects.all()
     serializer_class = UnitSerializer
+    permission_classes = [IsAdminOrReadOnly]
+    
 
 class HostelViewSet(ModelViewSet):
     queryset = Hostel.objects.all()

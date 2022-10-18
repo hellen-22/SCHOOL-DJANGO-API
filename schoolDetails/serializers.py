@@ -38,6 +38,12 @@ class CreateDepartmentSerializer(serializers.ModelSerializer):
         fields = ['id', 'department_name']
 
 
+class UpdateDepartmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Department
+        fields = ['department_name']
+
+
 class UnitSerializer(serializers.ModelSerializer):
     class Meta:
         model = Unit

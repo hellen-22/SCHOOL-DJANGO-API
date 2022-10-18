@@ -25,8 +25,8 @@ class Department(models.Model):
         return self.school.school_name
 
 class Unit(models.Model):
-    unit_name = models.CharField(max_length=255)
-    unit_code = models.CharField(max_length=255)
+    unit_name = models.CharField(max_length=255, null=False)
+    unit_code = models.CharField(max_length=255, null=False)
 
     def __str__(self) -> str:
         return self.unit_name
