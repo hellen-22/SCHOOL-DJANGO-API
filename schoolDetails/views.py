@@ -41,11 +41,12 @@ class UnitViewSet(ModelViewSet):
 class HostelViewSet(ModelViewSet):
     queryset = Hostel.objects.all()
     serializer_class = HostelSerializer
+    permission_classes = [IsAdminOrReadOnly]
 
 
 class UnitResultViewSet(ModelViewSet):
     serializer_class = UnitResultSerializer
-    permission_classes = [IsAdminOrReadOnly]
+    permission_classes = [IsAdminUser]
     
     """
     def get_serializer_class(self):

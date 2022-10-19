@@ -53,7 +53,7 @@ class UnitSerializer(serializers.ModelSerializer):
 class HostelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Hostel
-        fields = ['id', 'hostel_name', 'capacity', 'student']
+        fields = ['id', 'hostel_name', 'capacity']
     
 
 class ExamSerializer(serializers.ModelSerializer):
@@ -80,4 +80,4 @@ class UnitResultSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Result
-        fields = ['id', 'student','unit', 'cat', 'exam']
+        fields = ['id', 'student', 'unit', 'cat', 'exam']

@@ -4,12 +4,11 @@ from  . import views
 
 router = routers.DefaultRouter()
 router.register('school', views.SchoolViewSet)
+router.register('unit', views.UnitViewSet)
+router.register('hostel', views.HostelViewSet, basename='hostel')
 
 school_router = routers.NestedDefaultRouter(router, 'school' ,lookup='school')
 school_router.register('department', views.DepartmentViewSet, basename='department')
-
-router.register('unit', views.UnitViewSet)
-router.register('hostel', views.HostelViewSet, basename='hostel')
 
 unit_router = routers.NestedDefaultRouter(router, 'unit', lookup='unit')
 unit_router.register('result', views.UnitResultViewSet, basename='result')
