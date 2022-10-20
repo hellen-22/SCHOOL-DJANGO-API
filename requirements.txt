@@ -1,0 +1,9 @@
+Django
+django-debug-toolbar
+djangorestframework
+djoser
+mysqlclient
+drf-nested-routers
+pytest
+celery
+model_bakery

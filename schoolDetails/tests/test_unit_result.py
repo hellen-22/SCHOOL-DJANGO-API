@@ -1,5 +1,3 @@
-from tkinter.messagebox import NO
-from urllib import response
 import pytest
 from rest_framework import status
 from model_bakery import baker

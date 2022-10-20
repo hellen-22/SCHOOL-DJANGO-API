@@ -155,3 +155,13 @@ DJOSER = {
         'user_create': 'custom.serializers.UserCreateSerializer'
     }
 }
+
+CELERY_BROKER_URL = 'redis://localhost:6379/1'
+
+
+REST_FRAMEWORK = {
+    'COERCE_DECIMAL_TO_STRING': False,
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
