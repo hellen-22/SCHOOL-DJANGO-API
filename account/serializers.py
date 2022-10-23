@@ -125,4 +125,3 @@ class StudentResultsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Result
         fields = ['id', 'unit', 'cat', 'exam', 'total']
-

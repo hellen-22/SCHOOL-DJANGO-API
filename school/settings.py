@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'rest_framework',
     'djoser',
+    'drf_yasg',
 
     'custom',
     'account',
@@ -164,4 +165,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+}
+
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
 }
