@@ -1,4 +1,3 @@
-from pyexpat import model
 from django.db import transaction
 from django.db.models import Q
 from rest_framework import serializers

@@ -1,4 +1,3 @@
-from ast import Mod
 from django.db.models.aggregates import Count
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser
