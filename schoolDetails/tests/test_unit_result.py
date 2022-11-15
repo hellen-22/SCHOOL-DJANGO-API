@@ -8,7 +8,8 @@ from schoolDetails.models import Unit, UnitDetails
 @pytest.fixture
 def create_unit_result(api_client):
     def do_create_unit_result(unit_result):
-        return api_client.post('/school_details/unit/1/result/', unit_result)
+        unit = baker.make(Unit)
+        return api_client.post(f'/school_details/unit/{unit.id}/result/', unit_result)
     return do_create_unit_result
 
 @pytest.mark.django_db
@@ -67,7 +68,7 @@ class TestRetrieveUnitResult():
         authenticate_user()
         unit_result = baker.make(UnitDetails)
 
-        response = api_client.get(f'/school_details/unit/1/result/{unit_result.id}/')
+        response = api_client.get(f'/school_details/unit/{unit_result.unit.id}/result/{unit_result.id}/')
 
         assert response.status_code == status.HTTP_200_OK
         assert response.data == {

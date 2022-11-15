@@ -3,6 +3,7 @@ from rest_framework import status
 from model_bakery import baker
 
 from schoolDetails.models import Department, School
+from django.contrib.auth.models import User
 
 
 @pytest.fixture
